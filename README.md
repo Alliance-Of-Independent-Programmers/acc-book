@@ -7,4 +7,7 @@ source .venv/bin/activate
 pip install nodeenv 
 nodeenv -p
 npm install -g yarn 
+cd ./frontend 
+yarn install
+
 ```

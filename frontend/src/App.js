@@ -58,21 +58,21 @@ export default function App() {
           </Col>
         </Row>
         <Row>
-          <Form>
+          <Form method="post" action="/api/save_message">
             <Form.Group controlId="formFile" className="mb-3">
               <Form.Label>Выберите аватар</Form.Label>
               <Form.Control type="file" />
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Никнейм</Form.Label>
-              <Form.Control type="email" />
+              <Form.Label>Почта</Form.Label>
+              <Form.Control type="email" name="email" />
             </Form.Group>
             <Form.Group
               className="mb-3"
               controlId="exampleForm.ControlTextarea1"
             >
               <Form.Label>Комментарий</Form.Label>
-              <Form.Control as="textarea" rows={3} />
+              <Form.Control as="textarea" rows={3} name="text" />
             </Form.Group>
             <Button variant="primary" type="submit">
               Закоментить

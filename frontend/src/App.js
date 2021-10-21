@@ -5,6 +5,8 @@ import Nav from "react-bootstrap/Nav";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
 
 import CommentView from "./CommentView";
 import comments from "./data";
@@ -51,9 +53,31 @@ export default function App() {
             <h1>Vova</h1>
             <h1>Dima</h1>
           </Col>
-          <Col>
+          <Col xs={9}>
             <CommentView comments={comments} />
           </Col>
+        </Row>
+        <Row>
+          <Form>
+            <Form.Group controlId="formFile" className="mb-3">
+              <Form.Label>Выберите аватар</Form.Label>
+              <Form.Control type="file" />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Label>Никнейм</Form.Label>
+              <Form.Control type="email" />
+            </Form.Group>
+            <Form.Group
+              className="mb-3"
+              controlId="exampleForm.ControlTextarea1"
+            >
+              <Form.Label>Комментарий</Form.Label>
+              <Form.Control as="textarea" rows={3} />
+            </Form.Group>
+            <Button variant="primary" type="submit">
+              Закоментить
+            </Button>
+          </Form>
         </Row>
       </Container>
     </>

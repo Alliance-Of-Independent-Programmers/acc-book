@@ -1,14 +1,15 @@
 from starlette.applications import Starlette
+from starlette.responses import PlainTextResponse
+from starlette.responses import HTMLResponse
 from starlette.responses import FileResponse
 from starlette.routing import Route
-from starlette.staticfiles import StaticFiles
 
 
-def homepage(request):
-    return FileResponse('../frontend/public/index.html')
+async def homepage(request):
+    return FileResponse('../frontend/src/')
 
 #
-#def user_me(request):
+# def user_me(request):
 #    username = "John Doe"
 #    return PlainTextResponse('Hello, %s!' % username)
 
@@ -28,10 +29,10 @@ def startup():
 
 routes = [
     Route('/', homepage),
-    #Route('/user/me', user_me),
-    #Route('/user/{username}', user),
-    #WebSocketRoute('/ws', websocket_endpoint),
-    #Mount('/static', StaticFiles(directory="static")),
+    # Route('/user/me', user_me),
+    # Route('/user/{username}', user),
+    # WebSocketRoute('/ws', websocket_endpoint),
+    # Mount('/static', StaticFiles(directory="static")),
 ]
 
 app = Starlette(debug=True, routes=routes, on_startup=[startup])

@@ -8,8 +8,10 @@ import Row from "react-bootstrap/Row";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
-import CommentView from "./CommentView";
-import comments from "./data";
+import CommentView from "./commentview/CommentView";
+import comments from "./commentview/data";
+import OnlineView from "./onlineview/OnlineView";
+import onlarr from "./onlineview/data";
 
 export default function App() {
   return (
@@ -47,11 +49,7 @@ export default function App() {
         <Row>
           <Col>
             <h1>В онлайне</h1>
-            <h1>Misha</h1>
-            <h1>Andrew</h1>
-            <h1>Perfest</h1>
-            <h1>Vova</h1>
-            <h1>Dima</h1>
+            <OnlineView onlarr={onlarr} />
           </Col>
           <Col xs={9}>
             <CommentView comments={comments} />
@@ -59,10 +57,10 @@ export default function App() {
         </Row>
         <Row>
           <Form method="post" action="/api/save_message">
-            <Form.Group controlId="formFile" className="mb-3">
-              <Form.Label>Выберите аватар</Form.Label>
-              <Form.Control type="file" />
-            </Form.Group>
+            {/*<Form.Group controlId="formFile" className="mb-3">*/}
+            {/*  <Form.Label>Выберите аватар</Form.Label>*/}
+            {/*  <Form.Control type="file" />*/}
+            {/*</Form.Group>*/}
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Почта</Form.Label>
               <Form.Control type="email" name="email" />

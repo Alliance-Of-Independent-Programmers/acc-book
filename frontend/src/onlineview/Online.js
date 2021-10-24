@@ -1,6 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+fetch("/api/online.json")
+    .then(res => res.json())
+    .then(onlarr => )
+
+
 export default function Online(props) {
   return (
     <div className="Online">

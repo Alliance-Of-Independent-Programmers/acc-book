@@ -56,7 +56,7 @@ export default function App() {
           </Col>
         </Row>
         <Row>
-          <Form method="post" action="http://localhost:8000">
+          <Form method="post" action="/api/example/app">
             {/*<Form.Group controlId="formFile" className="mb-3">*/}
             {/*  <Form.Label>Выберите аватар</Form.Label>*/}
             {/*  <Form.Control type="file" />*/}

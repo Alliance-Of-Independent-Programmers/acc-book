@@ -63,4 +63,3 @@ app = Starlette(
     on_startup=[database.connect],
     on_shutdown=[database.disconnect]
 )
-

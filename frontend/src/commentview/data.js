@@ -1,8 +1,8 @@
-import misha from "../Pics/Miahs.jpg";
-import yaroslav from "../Pics/Yaroslav.jpg";
-import goblin from "../Pics/Goblin.jpg";
-import sanya from "../Pics/Sanya.jpg";
-import artem from "../Pics/Artem.jpg";
+import misha from "../../../backend/Pics/Miahs.jpg";
+import yaroslav from "../../../backend/Pics/Yaroslav.jpg";
+import goblin from "../../../backend/Pics/Goblin.jpg";
+import sanya from "../../../backend/Pics/Sanya.jpg";
+import artem from "../../../backend/Pics/Artem.jpg";
 
 const comment1 = {
   date: new Date(),

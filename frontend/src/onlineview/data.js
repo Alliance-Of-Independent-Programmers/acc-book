@@ -1,12 +1,12 @@
-import misha from "../Pics/Miahs.jpg";
-import slava from "../Pics/Slava.jpg";
-import andrew from "../Pics/Andrew.jpg";
-import goblin from "../Pics/Goblin.jpg";
-import killreal from "../Pics/KillReal.jpg";
-import mauri from "../Pics/Maury.jpg";
-import sanya from "../Pics/Sanya.jpg";
-import yaroslav from "../Pics/Yaroslav.jpg";
-import artem from "../Pics/Artem.jpg";
+import misha from "../../../backend/Pics/Miahs.jpg";
+import slava from "../../../backend/Pics/Slava.jpg";
+import andrew from "../../../backend/Pics/Andrew.jpg";
+import goblin from "../../../backend/Pics/Goblin.jpg";
+import killreal from "../../../backend/Pics/KillReal.jpg";
+import mauri from "../../../backend/Pics/Maury.jpg";
+import sanya from "../../../backend/Pics/Sanya.jpg";
+import yaroslav from "../../../backend/Pics/Yaroslav.jpg";
+import artem from "../../../backend/Pics/Artem.jpg";
 
 const online1 = {
   author: {

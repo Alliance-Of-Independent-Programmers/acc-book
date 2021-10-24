@@ -1,38 +1,66 @@
+import databases
+import sqlalchemy
 from starlette.applications import Starlette
-from starlette.responses import PlainTextResponse
-from starlette.responses import HTMLResponse
-from starlette.responses import FileResponse
+from starlette.responses import JSONResponse
+from starlette.config import Config
 from starlette.routing import Route
 
-
-async def homepage(request):
-    return FileResponse('../frontend/src/')
-
-#
-# def user_me(request):
-#    username = "John Doe"
-#    return PlainTextResponse('Hello, %s!' % username)
-
-# def user(request):
-#    username = request.path_params['username']
-#    return PlainTextResponse('Hello, %s!' % username)
-
-# async def websocket_endpoint(websocket):
-#    await websocket.accept()
-#    await websocket.send_text('Hello, websocket!')
-#    await websocket.close()
+# Configuration from environment variables or '.env' file.
+config = Config('.env')
+DATABASE_URL = config('DATABASE_URL')
 
 
-def startup():
-    print('Ready to go')
+# Database table definitions.
+metadata = sqlalchemy.MetaData()
+
+
+notes = sqlalchemy.Table(
+    "notes",
+    metadata,
+    sqlalchemy.Column("id", sqlalchemy.Integer, primary_key=True),
+    sqlalchemy.Column("text", sqlalchemy.String),
+    sqlalchemy.Column("completed", sqlalchemy.Boolean),
+)
+
+database = databases.Database(DATABASE_URL)
+
+
+# Main application code.
+async def list_notes(request):
+    query = notes.select()
+    results = await database.fetch_all(query)
+    content = [
+        {
+            "text": result["text"],
+            "completed": result["completed"]
+        }
+        for result in results
+    ]
+    return JSONResponse(content)
+
+
+async def add_note(request):
+    data = await request.json()
+    query = notes.insert().values(
+       text=data["text"],
+       completed=data["completed"]
+    )
+    await database.execute(query)
+    return JSONResponse({
+        "text": data["text"],
+        "completed": data["completed"]
+    })
 
 
 routes = [
-    Route('/', homepage),
-    # Route('/user/me', user_me),
-    # Route('/user/{username}', user),
-    # WebSocketRoute('/ws', websocket_endpoint),
-    # Mount('/static', StaticFiles(directory="static")),
+    Route("/notes", endpoint=list_notes, methods=["GET"]),
+    Route("/notes", endpoint=add_note, methods=["POST"]),
 ]
 
-app = Starlette(debug=True, routes=routes, on_startup=[startup])
+
+app = Starlette(
+    routes=routes,
+    on_startup=[database.connect],
+    on_shutdown=[database.disconnect]
+)
+

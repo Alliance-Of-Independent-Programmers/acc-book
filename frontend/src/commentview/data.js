@@ -1,5 +1,5 @@
 import misha from "../Pics/Miahs.jpg";
-import slava from "../Pics/Slava.jpg";
+import yaroslav from "../Pics/Yaroslav.jpg";
 import goblin from "../Pics/Goblin.jpg";
 import sanya from "../Pics/Sanya.jpg";
 import artem from "../Pics/Artem.jpg";
@@ -15,10 +15,10 @@ const comment1 = {
 
 const comment2 = {
   date: new Date(),
-  text: "Коммент славы",
+  text: "у меня дед картой был",
   author: {
-    name: "Slava",
-    avatarUrl: slava,
+    name: "Yaroslave",
+    avatarUrl: yaroslav,
   },
 };
 

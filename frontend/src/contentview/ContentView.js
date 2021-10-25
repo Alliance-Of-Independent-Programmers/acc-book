@@ -3,7 +3,6 @@ import OnlineView from "./onlineview/OnlineView";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import React, { useState, useEffect } from "react";
-import Button from "react-bootstrap/Button";
 
 export default function ContentView(props) {
   const [data, setData] = useState([]);
@@ -29,10 +28,6 @@ export default function ContentView(props) {
     <Row>
       {data.length > 0 ? (
         <>
-          <Col>
-            <p> </p>
-            <Button>Нажимай</Button>
-          </Col>
           <Col>
             <h1>В онлайне</h1>
             <OnlineView onlarr={data} />

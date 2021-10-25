@@ -7,7 +7,7 @@ export default function Online(props) {
       <div className="UserInfo">
         <img
           className="Avatar"
-          src="data:image/jpg;base64, ${props.author.avatarUrl}"
+          src={"data:image/jpeg;base64, " + props.author.avatarUrl}
           alt={props.author.name}
         />
         <div className="UserInfo-name">{props.author.name}</div>

@@ -50,8 +50,5 @@ comment5 = {
 }
 
 comments = [comment1, comment2, comment3, comment4, comment5]
-filename = "comments.json"
-with open(filename, "w", encoding="utf-8") as write_file:
-    json.dump(comments, write_file, ensure_ascii=False)
-    print("OK")
+
 

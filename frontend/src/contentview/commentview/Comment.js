@@ -1,14 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-fetch("/api/online.json")
-    .then(res => res.json())
-    .then(onlarr => )
+// function formatDate(date) {
+//   return date.toLocaleDateString();
+// }
 
-
-export default function Online(props) {
+export default function Comment(props) {
   return (
-    <div className="Online">
+    <div className="Comment">
       <div className="UserInfo">
         <img
           className="Avatar"
@@ -17,10 +16,14 @@ export default function Online(props) {
         />
         <div className="UserInfo-name">{props.author.name}</div>
       </div>
+      <div className="Comment-text">{props.text}</div>
+      {/*<div className="Comment-date">{formatDate(props.date)}</div>*/}
     </div>
   );
 }
 
-Online.propTypes = {
+Comment.propTypes = {
   author: PropTypes.object,
+  text: PropTypes.object,
+  date: PropTypes.object,
 };

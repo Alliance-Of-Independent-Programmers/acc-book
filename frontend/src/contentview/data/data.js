@@ -1,8 +1,8 @@
-import misha from "../../../backend/Pics/Miahs.jpg";
-import yaroslav from "../../../backend/Pics/Yaroslav.jpg";
-import goblin from "../../../backend/Pics/Goblin.jpg";
-import sanya from "../../../backend/Pics/Sanya.jpg";
-import artem from "../../../backend/Pics/Artem.jpg";
+import misha from "../../Pics/Miahs.jpg";
+import goblin from "../../Pics/Goblin.jpg";
+import sanya from "../../Pics/Sanya.jpg";
+import yaroslav from "../../Pics/Yaroslav.jpg";
+import artem from "../../Pics/Artem.jpg";
 
 const comment1 = {
   date: new Date(),
@@ -49,6 +49,6 @@ const comment5 = {
   },
 };
 
-const comments = [comment1, comment2, comment3, comment4, comment5];
+const data = [comment1, comment2, comment3, comment4, comment5];
 
-export default comments;
+export default data;

@@ -1,5 +1,4 @@
 import base64
-import json
 
 misha = base64.b64encode(open("../Pics/Miahs.jpg", "rb").read()).decode("UTF-8")
 yaroslav = base64.b64encode(open("../Pics/Yaroslav.jpg", "rb").read()).decode("UTF-8")

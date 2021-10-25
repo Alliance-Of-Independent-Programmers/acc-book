@@ -3,6 +3,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import Session
 from sqlalchemy.ext.declarative import declarative_base
 
+
 Base = declarative_base()
 
 
@@ -16,9 +17,12 @@ class OneUser(Base):
 
 class DataBaseResolver(object):
     def __init__(self):
-        self.SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://book-service:pass123@localhost/playground'
-        self.engine = create_engine(self.SQLALCHEMY_DATABASE_URI)
+        sqlalchemy_database_uri = 'mysql+pymysql://book-service:pass123@localhost/playground'
+        self.engine = create_engine(sqlalchemy_database_uri)
         self.session = Session(bind=self.engine)
+
+    def get_all_users(self):
+        return self.session.query(OneUser.user_id, OneUser.email, OneUser.nickname, OneUser.password).all()
 
     def add_user_to_db(self, nick, eml, passwd):
         user_to_add = OneUser(nickname=nick, email=eml, password=passwd)
@@ -33,3 +37,5 @@ class DataBaseResolver(object):
 
     def commit_session(self):
         self.session.commit()
+
+

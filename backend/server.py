@@ -1,10 +1,10 @@
 import json
-from dblib import DataBaseResolver
+from userdb import UserDataResolver
 from starlette.applications import Starlette
 from starlette.responses import JSONResponse
 from starlette.routing import Route
 
-resolver = DataBaseResolver()
+resolver = UserDataResolver()
 
 
 # Main application code.

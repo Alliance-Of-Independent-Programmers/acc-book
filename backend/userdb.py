@@ -15,7 +15,7 @@ class OneUser(Base):
     password = Column(String)
 
 
-class DataBaseResolver(object):
+class UserDataResolver(object):
     def __init__(self):
         sqlalchemy_database_uri = 'mysql+pymysql://book-service:pass123@localhost/playground'
         self.engine = create_engine(sqlalchemy_database_uri)

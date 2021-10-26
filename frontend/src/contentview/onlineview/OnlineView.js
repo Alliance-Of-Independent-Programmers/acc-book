@@ -2,16 +2,16 @@ import React from "react";
 import Online from "./Online";
 import PropTypes from "prop-types";
 
-export default function CommentView(props) {
+export default function OnlineView(props) {
   return (
     <>
-      {props.onlarr.map((comment, i) => {
-        return <Online author={comment.author} key={i} />;
+      {props.onlarr.map((online, i) => {
+        return <Online author={online.author} key={i} />;
       })}
     </>
   );
 }
 
-CommentView.propTypes = {
+OnlineView.propTypes = {
   onlarr: PropTypes.array,
 };

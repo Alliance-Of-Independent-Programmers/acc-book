@@ -12,8 +12,8 @@ export default function FormView(props) {
         {/*  <Form.Control type="file" />*/}
         {/*</Form.Group>*/}
         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-          <Form.Label>Почта</Form.Label>
-          <Form.Control type="email" name="email" />
+          <Form.Label>Логин</Form.Label>
+          <Form.Control type="text" name="login" />
         </Form.Group>
         <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
           <Form.Label>Комментарий</Form.Label>

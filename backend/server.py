@@ -1,53 +1,22 @@
-import databases
-import sqlalchemy
+import json
+from userdb import UserDataResolver
 from starlette.applications import Starlette
 from starlette.responses import JSONResponse
-from starlette.config import Config
 from starlette.routing import Route
 
-# Configuration from environment variables or '.env' file.
-config = Config('.env')
-DATABASE_URL = config('DATABASE_URL')
-
-
-# Database table definitions.
-metadata = sqlalchemy.MetaData()
-
-
-notes = sqlalchemy.Table(
-    "notes",
-    metadata,
-    sqlalchemy.Column("id", sqlalchemy.Integer, primary_key=True),
-    sqlalchemy.Column("text", sqlalchemy.String),
-    sqlalchemy.Column("completed", sqlalchemy.Boolean),
-)
-
-database = databases.Database(DATABASE_URL)
+resolver = UserDataResolver()
 
 
 # Main application code.
 async def list_notes(request):
-    query = notes.select()
-    results = await database.fetch_all(query)
-    content = [
-        {
-            "text": result["text"],
-            "completed": result["completed"]
-        }
-        for result in results
-    ]
-    return JSONResponse(content)
+    return json.dumps(resolver.get_all_users())
 
 
 async def add_note(request):
     data = await request.json()
-    query = notes.insert().values(
-       text=data["text"],
-       completed=data["completed"]
-    )
-    await database.execute(query)
+    resolver.add_user_to_db(data["nickname"], data["email"], data["password"])
     return JSONResponse({
-        "text": data["text"],
+        "text": data["nickname"],
         "completed": data["completed"]
     })
 
@@ -59,7 +28,5 @@ routes = [
 
 
 app = Starlette(
-    routes=routes,
-    on_startup=[database.connect],
-    on_shutdown=[database.disconnect]
+    routes=routes
 )

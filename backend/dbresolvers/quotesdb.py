@@ -22,3 +22,9 @@ class QuoteDataResolver(object):
     def add_quote(self, auth, quote):
         quote_to_add = OneQuote(author=auth, the_quote=quote)
         self.session.add(quote_to_add)
+
+    def get_all_quotes(self):
+        return self.session.query(OneQuote.user_id, OneQuote.email, OneQuote.nickname, OneQuote.password).all()
+
+    def commit_session(self):
+        self.session.commit()

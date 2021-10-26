@@ -1,4 +1,3 @@
-import json
 from backend.dbresolvers.userdb import UserDataResolver
 from starlette.applications import Starlette
 from starlette.responses import JSONResponse
@@ -9,7 +8,7 @@ resolver = UserDataResolver()
 
 # Main application code.
 async def get_all_users(request):
-    return JSONResponse(json.dumps(resolver.get_all_users()))
+    return JSONResponse(resolver.get_all_users())
 
 
 async def add_note(request):

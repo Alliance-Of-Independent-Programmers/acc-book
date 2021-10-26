@@ -1,5 +1,5 @@
 import json
-from userdb import UserDataResolver
+from backend.dbresolvers.userdb import UserDataResolver
 from starlette.applications import Starlette
 from starlette.responses import JSONResponse
 from starlette.routing import Route
@@ -8,8 +8,8 @@ resolver = UserDataResolver()
 
 
 # Main application code.
-async def list_notes(request):
-    return json.dumps(resolver.get_all_users())
+async def get_all_users(request):
+    return JSONResponse(json.dumps(resolver.get_all_users()))
 
 
 async def add_note(request):
@@ -20,10 +20,10 @@ async def add_note(request):
         "completed": data["completed"]
     })
 
-
+# TODO: needs to be tested
 routes = [
-    Route("/notes", endpoint=list_notes, methods=["GET"]),
-    Route("/notes", endpoint=add_note, methods=["POST"]),
+    Route("/api/all_users", endpoint=get_all_users, methods=["GET"]),
+    Route("/api/all_users", endpoint=add_note, methods=["POST"])
 ]
 
 

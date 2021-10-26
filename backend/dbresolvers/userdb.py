@@ -1,5 +1,5 @@
 import json
-from sqlalchemy import Table, Column, Integer, String
+from sqlalchemy import Column, Integer, String
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session
 from sqlalchemy.ext.declarative import declarative_base
@@ -26,7 +26,7 @@ class UserDataResolver(object):
         self.session.close()
 
     def get_all_users(self):
-        return json.dumps(self.session.query(OneUser.user_id, OneUser.email, OneUser.nickname, OneUser.password).all())
+        return list(self.session.query(OneUser.user_id, OneUser.email, OneUser.nickname, OneUser.password).all())
 
     def add_user_to_db(self, nick, eml, passwd):
         user_to_add = OneUser(nickname=nick, email=eml, password=passwd)
@@ -36,10 +36,12 @@ class UserDataResolver(object):
         user_to_delete = self.session.query().filter(OneUser.user_id == uid).one()
         self.session.delete(user_to_delete)
 
+    # TODO: consider there is no double accounts and change .all() to .one()
     def get_user_from_db(self, criteria, key):
-        return json.dumps(self.session.query(OneUser).filter(criteria == key).all())
+        return list(self.session.query(OneUser).filter(criteria == key).all())
 
     def commit_session(self):
         self.session.commit()
+
 
 

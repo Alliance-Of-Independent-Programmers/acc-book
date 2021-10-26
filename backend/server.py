@@ -1,5 +1,5 @@
-from backend.dbresolvers.userdb import UserDataResolver
-from backend.dbresolvers.quotesdb import QuoteDataResolver
+from dbresolvers.userdb import UserDataResolver
+from dbresolvers.quotesdb import QuoteDataResolver
 from starlette.applications import Starlette
 from starlette.responses import JSONResponse
 from starlette.routing import Route
@@ -11,7 +11,7 @@ quotes_db_resolver = QuoteDataResolver()
 
 # Main application code.
 async def get_all_users(request):
-    return JSONResponse(user_db_resolver.get_all_users())
+    user_list = user_db_resolver.get_all_users()
 
 
 async def add_note(request):
@@ -25,7 +25,7 @@ async def add_note(request):
 
 
 async def get_all_quotes(request):
-    return JSONResponse(quotes_db_resolver.get_all_quotes())
+    quotes_list = quotes_db_resolver.get_all_quotes()
 
 
 async def add_quote(request):
@@ -36,7 +36,6 @@ async def add_quote(request):
         "quote": data["quote"],
         "status": data["success"]
     })
-
 
 # TODO: needs to be tested
 routes = [

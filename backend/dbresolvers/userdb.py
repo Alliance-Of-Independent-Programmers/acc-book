@@ -21,6 +21,9 @@ class UserDataResolver(object):
         self.engine = create_engine(sqlalchemy_database_uri)
         self.session = Session(bind=self.engine)
 
+    def __del__(self):
+        self.session.close()
+
     def get_all_users(self):
         return self.session.query(OneUser.user_id, OneUser.email, OneUser.nickname, OneUser.password).all()
 

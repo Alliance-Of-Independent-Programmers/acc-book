@@ -4,7 +4,7 @@ from starlette.applications import Starlette
 from starlette.responses import JSONResponse
 from starlette.routing import Route
 
-
+# Objects do all database manipulations
 user_db_resolver = UserDataResolver()
 quotes_db_resolver = QuoteDataResolver()
 
@@ -19,7 +19,7 @@ async def get_all_users(request):
     return JSONResponse(users_json)
 
 
-async def add_note(request):
+async def add_user(request):
     data = await request.json()
     user_db_resolver.add_user_to_db(data["nickname"], data["email"], data["password"])
     user_db_resolver.commit_session()
@@ -31,6 +31,11 @@ async def add_note(request):
 
 async def get_all_quotes(request):
     quotes_list = quotes_db_resolver.get_all_quotes()
+    quotes_json = dict()
+    for quote in quotes_list:
+        quote_info = {"author": quote.author, "the_quote": quote.the_quote}
+        quote_info[quote.quote_id] = quote_info
+    return JSONResponse(quotes_json)
 
 
 async def add_quote(request):
@@ -45,7 +50,7 @@ async def add_quote(request):
 # TODO: needs to be tested
 routes = [
     Route("/api/all_users", endpoint=get_all_users, methods=["GET"]),
-    Route("/api/all_users", endpoint=add_note, methods=["POST"]),
+    Route("/api/all_users", endpoint=add_user, methods=["POST"]),
     Route("/api/all_quotes", endpoint=get_all_quotes, methods=["GET"]),
     Route("/api/all_quotes", endpoint=add_quote, methods=["POST"])
 ]

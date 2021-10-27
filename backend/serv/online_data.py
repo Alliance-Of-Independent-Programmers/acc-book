@@ -17,63 +17,63 @@ mauri = base64.b64encode(open(os.path.join(path, "../Pics/Maury.jpg"), "rb").rea
 online1 = {
   "author": {
     "name": "Artem",
-    "avatarUrl": artem,
+    "img": artem,
   },
 }
 
 online2 = {
   "author": {
     "name": "Slava",
-    "avatarUrl": slava,
+    "img": slava,
   },
 }
 
 online3 = {
   "author": {
     "name": "Misha",
-    "avatarUrl": misha,
+    "img": misha,
   },
 }
 
 online4 = {
   "author": {
     "name": "Andrew",
-    "avatarUrl": andrew,
+    "img": andrew,
   },
 }
 
 online5 = {
   "author": {
     "name": "Goblin",
-    "avatarUrl": goblin,
+    "img": goblin,
   },
 }
 
 online6 = {
   "author": {
     "name": "KillReal",
-    "avatarUrl": killreal,
+    "img": killreal,
   },
 }
 
 online7 = {
   "author": {
     "name": "Mauri",
-    "avatarUrl": mauri,
+    "img": mauri,
   },
 }
 
 online8 = {
   "author": {
     "name": "Sany0K",
-    "avatarUrl": sanya,
+    "img": sanya,
   },
 }
 
 online9 = {
   "author": {
     "name": "Yaroslave",
-    "avatarUrl": yaroslav,
+    "img": yaroslav,
   },
 }
 

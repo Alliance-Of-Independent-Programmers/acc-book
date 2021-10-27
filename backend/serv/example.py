@@ -1,3 +1,5 @@
+import base64
+import os.path
 from starlette.requests import Request
 from starlette.responses import Response, JSONResponse
 from starlette.routing import Route
@@ -5,18 +7,22 @@ from starlette.applications import Starlette
 from backend.serv.online_data import all_online
 from backend.serv.comment_data import all_comment
 
-a = []
+path=os.path.dirname(__file__)
 
+a = []
+misha = base64.b64encode(open(os.path.join(path, "../Pics/Miahs.jpg"), "rb").read()).decode("UTF-8")
+#
 
 async def save_comment(request: Request):
     data_forms = await request.form()
     login = data_forms.get("login")
     text = data_forms.get("text")
+    img = data_forms.get("img")
     comment1 = {
         "text": text,
         "author": {
-            "name": login,
-            "avatarUrl": 0,
+            "login": login,
+            "img": misha,
         },
     }
     a.append(comment1)

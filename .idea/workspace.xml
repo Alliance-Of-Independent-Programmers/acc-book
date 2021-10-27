@@ -5,11 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3b83f168-5d05-4de2-a659-7282e91a2600" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/serv/comment_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/serv/comment_data.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/serv/example.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/serv/example.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/serv/online_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/serv/online_data.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/contentview/ContentView.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/contentview/ContentView.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/contentview/commentview/Comment.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/contentview/commentview/Comment.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/contentview/onlineview/Online.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/contentview/onlineview/Online.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/formview/FormView.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/formview/FormView.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -144,6 +146,8 @@
       <workItem from="1635127685666" duration="800000" />
       <workItem from="1635158353192" duration="9574000" />
       <workItem from="1635206445278" duration="792000" />
+      <workItem from="1635248552415" duration="7354000" />
+      <workItem from="1635359959791" duration="1131000" />
     </task>
     <servers />
   </component>

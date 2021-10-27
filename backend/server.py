@@ -1,29 +1,58 @@
-import json
-from userdb import UserDataResolver
+from dbresolvers.userdb import UserDataResolver
+from dbresolvers.quotesdb import QuoteDataResolver
 from starlette.applications import Starlette
 from starlette.responses import JSONResponse
 from starlette.routing import Route
 
-resolver = UserDataResolver()
+# Objects do all database manipulations
+user_db_resolver = UserDataResolver()
+quotes_db_resolver = QuoteDataResolver()
 
 
 # Main application code.
-async def list_notes(request):
-    return json.dumps(resolver.get_all_users())
+async def get_all_users(request):
+    user_list = user_db_resolver.get_all_users()
+    users_json = dict()
+    for user in user_list:
+        user_info = {"nickname": user.nickname, "email": user.email, "password": user.password}
+        users_json[user.user_id] = user_info
+    return JSONResponse(users_json)
 
 
-async def add_note(request):
+async def add_user(request):
     data = await request.json()
-    resolver.add_user_to_db(data["nickname"], data["email"], data["password"])
+    user_db_resolver.add_user_to_db(data["nickname"], data["email"], data["password"])
+    user_db_resolver.commit_session()
     return JSONResponse({
         "text": data["nickname"],
-        "completed": data["completed"]
+        "status": data["success"]
     })
 
 
+async def get_all_quotes(request):
+    quotes_list = quotes_db_resolver.get_all_quotes()
+    quotes_json = dict()
+    for quote in quotes_list:
+        quote_info = {"author": quote.author, "the_quote": quote.the_quote}
+        quotes_json[quote.quote_id] = quote_info
+    return JSONResponse(quotes_json)
+
+
+async def add_quote(request):
+    data = await request.json()
+    quotes_db_resolver.add_quote(data["author"], data["quote"])
+    quotes_db_resolver.commit_session()
+    return JSONResponse({
+        "quote": data["quote"],
+        "status": data["success"]
+    })
+
+# TODO: needs to be tested
 routes = [
-    Route("/notes", endpoint=list_notes, methods=["GET"]),
-    Route("/notes", endpoint=add_note, methods=["POST"]),
+    Route("/api/all_users", endpoint=get_all_users, methods=["GET"]),
+    Route("/api/all_users", endpoint=add_user, methods=["POST"]),
+    Route("/api/all_quotes", endpoint=get_all_quotes, methods=["GET"]),
+    Route("/api/all_quotes", endpoint=add_quote, methods=["POST"])
 ]
 
 

@@ -15,9 +15,12 @@ class OneQuote(Base):
 
 class QuoteDataResolver(object):
     def __init__(self):
-        sqlalchemy_database_uri = 'mysql+pymysql://book-service:pass123@localhost/playground'
+        sqlalchemy_database_uri = 'mysql+pymysql://quotes_db_solver:related_pass@localhost/playground'
         self.engine = create_engine(sqlalchemy_database_uri)
         self.session = Session(bind=self.engine)
+
+    def __del__(self):
+        self.session.close()
 
     def add_quote(self, auth, quote):
         quote_to_add = OneQuote(author=auth, the_quote=quote)

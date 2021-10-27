@@ -1,4 +1,3 @@
-import json
 from sqlalchemy import Column, Integer, String
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session
@@ -18,7 +17,7 @@ class OneUser(Base):
 
 class UserDataResolver(object):
     def __init__(self):
-        sqlalchemy_database_uri = 'mysql+pymysql://book-service:pass123@localhost/playground'
+        sqlalchemy_database_uri = 'mysql+pymysql://users_db_solver:related_pass@localhost/playground'
         self.engine = create_engine(sqlalchemy_database_uri)
         self.session = Session(bind=self.engine)
 

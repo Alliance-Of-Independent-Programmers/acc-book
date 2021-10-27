@@ -34,7 +34,7 @@ async def get_all_quotes(request):
     quotes_json = dict()
     for quote in quotes_list:
         quote_info = {"author": quote.author, "the_quote": quote.the_quote}
-        quote_info[quote.quote_id] = quote_info
+        quotes_json[quote.quote_id] = quote_info
     return JSONResponse(quotes_json)
 
 

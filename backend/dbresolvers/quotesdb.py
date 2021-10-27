@@ -24,7 +24,7 @@ class QuoteDataResolver(object):
         self.session.add(quote_to_add)
 
     def get_all_quotes(self):
-        return list(self.session.query(OneQuote.user_id, OneQuote.email, OneQuote.nickname, OneQuote.password).all())
+        return self.session.query(OneQuote.user_id, OneQuote.email, OneQuote.nickname, OneQuote.password).all()
 
     def commit_session(self):
         self.session.commit()

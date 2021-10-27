@@ -26,7 +26,7 @@ class UserDataResolver(object):
         self.session.close()
 
     def get_all_users(self):
-        return list(self.session.query(OneUser.user_id, OneUser.email, OneUser.nickname, OneUser.password).all())
+        return self.session.query(OneUser.user_id, OneUser.email, OneUser.nickname, OneUser.password).all()
 
     def add_user_to_db(self, nick, eml, passwd):
         user_to_add = OneUser(nickname=nick, email=eml, password=passwd)
@@ -38,7 +38,7 @@ class UserDataResolver(object):
 
     # TODO: consider there is no double accounts and change .all() to .one()
     def get_user_from_db(self, criteria, key):
-        return list(self.session.query(OneUser).filter(criteria == key).all())
+        return self.session.query(OneUser).filter(criteria == key).all()
 
     def commit_session(self):
         self.session.commit()

@@ -12,6 +12,11 @@ quotes_db_resolver = QuoteDataResolver()
 # Main application code.
 async def get_all_users(request):
     user_list = user_db_resolver.get_all_users()
+    users_json = dict()
+    for user in user_list:
+        user_info = {"nickname": user.nickname, "email": user.email, "password": user.password}
+        users_json[user.user_id] = user_info
+    return JSONResponse(users_json)
 
 
 async def add_note(request):

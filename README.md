@@ -23,7 +23,7 @@ yarn install
 * [JavaScript course](https://vk.com/im?peers=149106948_236941556_c110&sel=411936072&z=video411936072_456239988%2F06f5c8dabfc7b17e6e)
 ### *TODO:*
 #### Stage 1
-- [ ] Backend main logic
+- [x] Backend main logic
 - [ ] Frontend main logic
 #### Stage 2
 - [ ] Quote cards dashboard

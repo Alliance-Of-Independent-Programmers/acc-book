@@ -9,29 +9,47 @@ from backend.serv.comment_data import all_comment
 
 path=os.path.dirname(__file__)
 
+users = []
 a = []
+flag = False
 misha = base64.b64encode(open(os.path.join(path, "../Pics/Miahs.jpg"), "rb").read()).decode("UTF-8")
 #
 
-async def save_comment(request: Request):
-    data_forms = await request.form()
-    login = data_forms.get("login")
-    text = data_forms.get("text")
-    img = data_forms.get("img")
-    comment1 = {
-        "text": text,
-        "author": {
-            "login": login,
-            "img": misha,
-        },
-    }
-    a.append(comment1)
+async def registration(request: Request):
+    data_forms_reg = await request.form()
+    login = data_forms_reg.get("login")
+    password = data_forms_reg.get("password")
+    # img = data_forms.get("img")
+    user = {
+        "login": login,
+        "password": password,
+        # "img": misha,
+        }
+    users.append(user)
+    print(users)
     return Response(status_code=200)
 
 
-async def comment1_json_view(request):
+async def enter(request: Request):
+    data_forms_ent = await request.form()
+    login = data_forms_ent.get("login")
+    password = data_forms_ent.get("password")
+    # img = data_forms.get("img")
+    n = len(users)
+    for i in range(n):
+        if users[i]["login"] == login and users[i]["password"] == password:
+            a.append("accepted")
+            break
+    return Response(status_code=200)
+
+
+async def accepted_enter_jsonrespons(request):
     print(a)
-    return JSONResponse(a)
+    if a[0] == "accepted":
+        return JSONResponse("Пользователь найден")
+    else:
+        return JSONResponse("Пользователь не найден")
+
 
 
 async def comment_json_view(request):
@@ -43,9 +61,10 @@ async def online_json_view(request):
 
 
 routes = [
-    Route("/api/example/app", endpoint=save_comment, methods=["POST"]),
+    Route("/api/enter", endpoint=enter, methods=["POST"]),
+    Route("/api/registration", endpoint=registration, methods=["POST"]),
     Route("/api/online_view", endpoint=online_json_view, methods=["GET"]),
-    Route("/api/comment1_view", endpoint=comment1_json_view, methods=["GET"]),
+    Route("/api/accepted_enter_jsonrespons", endpoint=accepted_enter_jsonrespons, methods=["GET"]),
     Route("/api/comment_view", endpoint=comment_json_view, methods=["GET"])
 ]
 

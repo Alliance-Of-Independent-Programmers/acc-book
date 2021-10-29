@@ -22,7 +22,7 @@ export default function ContentView(props) {
 
   useEffect(() => {
     getData("/api/online_view").then((data) => setData(data));
-    getData1("/api/comment1_view").then((data) => setData1(data));
+    getData1("/api/comment_view").then((data) => setData1(data));
   }, []);
 
   return (

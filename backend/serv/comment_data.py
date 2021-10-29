@@ -18,7 +18,7 @@ comment1 = {
     "text": "So if we kill the enemy, the one waiting for us on the other side, will we finally be free?",
     "author": {
         "name": "Misha",
-        "avatarUrl": misha,
+        "img": misha,
     },
   }
 
@@ -27,7 +27,7 @@ comment2 = {
   "text": "у меня дед картой был",
   "author": {
     "name": "Yaroslave",
-    "avatarUrl": yaroslav,
+    "img": yaroslav,
   },
 }
 
@@ -35,7 +35,7 @@ comment3 = {
   "text": "А? Б...",
   "author": {
     "name": "Artem",
-    "avatarUrl": artem,
+    "img": artem,
   },
 }
 
@@ -43,7 +43,7 @@ comment4 = {
   "text": "Свою шизофрению на окружающих проецировать не следует.",
   "author": {
     "name": "Goblin",
-    "avatarUrl": goblin,
+    "img": goblin,
   },
 }
 
@@ -51,7 +51,7 @@ comment5 = {
   "text": "Что такое осень? Это рошан...",
   "author": {
     "name": "Sany0k",
-    "avatarUrl": sanya,
+    "img": sanya,
   },
 }
 

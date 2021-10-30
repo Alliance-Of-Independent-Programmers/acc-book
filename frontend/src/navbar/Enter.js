@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
@@ -12,10 +12,8 @@ export default function Enter() {
 
     return await response.json();
   };
-  useEffect(() => {
-    getData("/api/accepted_enter_jsonrespons").then((data2) => setData2(data2));
-  }, []);
-  alert(data2);
+  getData("/api/accepted_enter_jsonrespons").then((data2) => setData2(data2));
+  console.log(data2);
 
   const formSend = (event) => {
     const data = new FormData();

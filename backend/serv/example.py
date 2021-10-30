@@ -17,10 +17,12 @@ misha = base64.b64encode(open(os.path.join(path, "../Pics/Miahs.jpg"), "rb").rea
 
 async def registration(request: Request):
     data_forms_reg = await request.form()
+    email = data_forms_reg.get("email")
     login = data_forms_reg.get("login")
     password = data_forms_reg.get("password")
     # img = data_forms.get("img")
     user = {
+        "email": email,
         "login": login,
         "password": password,
         # "img": misha,

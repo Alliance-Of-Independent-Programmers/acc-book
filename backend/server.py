@@ -1,8 +1,9 @@
 from dbresolvers.userdb import UserDataResolver
 from dbresolvers.quotesdb import QuoteDataResolver
 from starlette.applications import Starlette
-from starlette.responses import JSONResponse
+from starlette.responses import JSONResponse, Response
 from starlette.routing import Route
+from starlette.requests import Request
 
 # Objects do all database manipulations
 user_db_resolver = UserDataResolver()
@@ -47,8 +48,20 @@ async def add_quote(request):
         "status": data["success"]
     })
 
+
+async def registration(request: Request):
+    data_forms_reg = await request.form()
+    login = data_forms_reg.get("login")
+    email = data_forms_reg.get("email")
+    password = data_forms_reg.get("password")
+    # TODO: get rid of possibility to add double note
+    user_db_resolver.add_user_to_db(login, email, password)
+    user_db_resolver.commit_session()
+    return Response(status_code=200)
+
 # TODO: needs to be tested
 routes = [
+    Route("/api/registration", endpoint=registration, methods=["POST"]),
     Route("/api/all_users", endpoint=get_all_users, methods=["GET"]),
     Route("/api/all_users", endpoint=add_user, methods=["POST"]),
     Route("/api/all_quotes", endpoint=get_all_quotes, methods=["GET"]),

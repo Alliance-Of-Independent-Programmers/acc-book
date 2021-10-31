@@ -56,6 +56,7 @@ async def registration(request: Request):
     password = data_forms_reg.get("password")
     # TODO: get rid of possibility to add double note
     user_db_resolver.add_user_to_db(login, email, password)
+    user_db_resolver.commit_session()
     return Response(status_code=200)
 
 # TODO: needs to be tested

@@ -1,9 +1,13 @@
 import typing
 
+from starlette.requests import Request
+from starlette.responses import Response, JSONResponse
+from starlette.routing import Route
 from starlette.applications import Starlette
 from starlette.authentication import requires
 from starlette.middleware.authentication import AuthenticationMiddleware
 from starlette.responses import JSONResponse, PlainTextResponse
+from starlette.routing import Route
 
 from starlette_auth_toolkit.base.backends import BaseBasicAuth
 from starlette_auth_toolkit.cryptography import PBKDF2Hasher
@@ -33,18 +37,34 @@ class BasicAuth(BaseBasicAuth):
         return await hasher.verify(password, user.password)
 
 
-# Application
+@requires("authenticated")
+async def protected(request):
+    return JSONResponse({"message": f"Hello, {request.user.username}!"})
 
-app = Starlette()
+routes = [
+    Route("/protected", endpoint=protected, methods=["GET"]),
+]
 
+app = Starlette(routes=routes)
 app.add_middleware(
     AuthenticationMiddleware,
     backend=BasicAuth(),
     on_error=lambda _, exc: PlainTextResponse(str(exc), status_code=401),
 )
+# app = Starlette()
+#
+# app.add_middleware(
+#     AuthenticationMiddleware,
+#     backend=BasicAuth(),
+#     on_error=lambda _, exc: PlainTextResponse(str(exc), status_code=401),
+# )
+#
+#
+# @app.route("/protected")
+# @requires("authenticated")
+# async def protected(request):
+#     return JSONResponse({"message": f"Hello, {request.user.username}!"})
 
-
-@app.route("/protected")
-@requires("authenticated")
-async def protected(request):
-    return JSONResponse({"message": f"Hello, {request.user.username}!"})
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app)

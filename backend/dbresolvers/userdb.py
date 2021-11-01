@@ -39,6 +39,16 @@ class UserDataResolver(object):
     def get_user_from_db(self, criteria, key):
         return self.session.query(OneUser).filter(criteria == key).all()
 
+    def check_user_validity(self, usr):
+        dnick_user_list = self.session.query(OneUser).filter(OneUser.nickname == usr.nickname).all()
+        demail_user_list = self.session.query(OneUser).filter(OneUser.email == usr.email).all()
+        if not dnick_user_list.empty():
+            return False
+        elif not demail_user_list.empty():
+            return False
+        else:
+            return True
+
     def commit_session(self):
         self.session.commit()
 

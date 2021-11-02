@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   BrowserRouter as Router,
   Switch,
@@ -14,112 +14,46 @@ import ContentView from "./contentview/ContentView";
 import NavigationView from "./navbar/navigationview/NavigationView";
 import Registration from "./navbar/Registration";
 import Enter from "./navbar/Enter";
+import { UserContext, anonymous } from "./UserContext";
 
 export default function App() {
+  const [user, setUser] = React.useState(anonymous);
+  useEffect(() => {
+    fetch("/api/check_user").then((resp) => {
+      if (resp.status === 200) {
+        setUser({ isAuthorized: true });
+        console.log("Ok");
+      }
+    });
+  }, []);
+
   return (
     <Router>
-      <NavigationView />
-      <Container>
-        <Switch>
-          <Route path="/registration">
-            <Registration />
-          </Route>
-          <Route path="/enter">
-            <Enter />
-          </Route>
-          <Route path="/" exact>
-            <ContentView />
-            <FormView />
-          </Route>
-        </Switch>
-      </Container>
+      <UserContext.Provider
+        value={{
+          userContext: user,
+          setUserContext: (newUser) => {
+            console.log("newUser", newUser);
+            setUser(newUser);
+          },
+        }}
+      >
+        <NavigationView />
+        <Container>
+          <Switch>
+            <Route path="/registration">
+              <Registration />
+            </Route>
+            <Route path="/enter">
+              <Enter />
+            </Route>
+            <Route path="/" exact>
+              <ContentView />
+              <FormView />
+            </Route>
+          </Switch>
+        </Container>
+      </UserContext.Provider>
     </Router>
   );
 }
-
-// import React from "react";
-// import {
-//   BrowserRouter as Router,
-//   Switch,
-//   Route,
-//   Link,
-//   useRouteMatch,
-//   useParams,
-// } from "react-router-dom";
-//
-// export default function App() {
-//   return (
-//     <Router>
-//       <div>
-//         <ul>
-//           <li>
-//             <Link to="/">Home</Link>
-//           </li>
-//           <li>
-//             <Link to="/about1">About</Link>
-//           </li>
-//           <li>
-//             <Link to="/topics">Topics</Link>
-//           </li>
-//         </ul>
-//
-//         <Switch>
-//           <Route path="/about1">
-//             <About1 />
-//           </Route>
-//           <Route path="/topics">
-//             <Topics />
-//           </Route>
-//           <Route path="/">
-//             <Home1 />
-//           </Route>
-//         </Switch>
-//       </div>
-//     </Router>
-//   );
-// }
-//
-// function Home1() {
-//   return <h2>Home</h2>;
-// }
-//
-// function About1() {
-//   return <h2>About</h2>;
-// }
-//
-// function Topics() {
-//   let match = useRouteMatch();
-//
-//   return (
-//     <div>
-//       <h2>Topics</h2>
-//
-//       <ul>
-//         <li>
-//           <Link to={`${match.url}/components`}>Components</Link>
-//         </li>
-//         <li>
-//           <Link to={`${match.url}/props-v-state`}>Props v. State</Link>
-//         </li>
-//       </ul>
-//
-//       {/* The Topics page has its own <Switch> with more routes
-//           that build on the /topics URL path. You can think of the
-//           2nd <Route> here as an "index" page for all topics, or
-//           the page that is shown when no topic is selected */}
-//       <Switch>
-//         <Route path={`${match.path}/:topicId`}>
-//           <Topic />
-//         </Route>
-//         <Route path={match.path}>
-//           <h3>Please select a topic.</h3>
-//         </Route>
-//       </Switch>
-//     </div>
-//   );
-// }
-//
-// function Topic() {
-//   let { topicId } = useParams();
-//   return <h3>Requested topic ID: {topicId}</h3>;
-// }

@@ -11,15 +11,17 @@ import {
   // useRouteMatch,
   // useParams,
 } from "react-router-dom";
+import UserContext from "../../UserContext";
 
 // import Registration from "../registration/registration";
 
 export default function FormView(props) {
+  const { userContext } = React.useContext(UserContext);
   return (
     <Router>
       <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
         <Container>
-          <Navbar.Brand href="#home">Цитатник</Navbar.Brand>
+          <Navbar.Brand href="/">Цитатник</Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="me-auto">
@@ -39,10 +41,14 @@ export default function FormView(props) {
                 </NavDropdown.Item>
               </NavDropdown>
             </Nav>
-            <Nav>
-              <Nav.Link href="/registration">Регистрация</Nav.Link>
-              <Nav.Link href="/enter">Вход</Nav.Link>
-            </Nav>
+            {userContext.isAuthorized ? (
+              <h1>Auth</h1>
+            ) : (
+              <Nav>
+                <Nav.Link href="/registration">Регистрация</Nav.Link>
+                <Nav.Link href="/enter">Вход</Nav.Link>
+              </Nav>
+            )}
           </Navbar.Collapse>
         </Container>
       </Navbar>

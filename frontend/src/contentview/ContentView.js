@@ -3,8 +3,10 @@ import OnlineView from "./onlineview/OnlineView";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import React, { useState, useEffect } from "react";
+import UserContext from "../UserContext";
 
 export default function ContentView(props) {
+  const { userContext } = React.useContext(UserContext);
   const [data, setData] = useState([]);
   const [data1, setData1] = useState([]);
 
@@ -24,7 +26,6 @@ export default function ContentView(props) {
     getData("/api/online_view").then((data) => setData(data));
     getData1("/api/comment_view").then((data) => setData1(data));
   }, []);
-
   return (
     <Row>
       {data.length > 0 ? (
@@ -36,6 +37,7 @@ export default function ContentView(props) {
           <Col xs={9}>
             <CommentView comments={data1} />
           </Col>
+          {userContext.isAuthorized && <h1>Auth</h1>}
         </>
       ) : (
         <b>Loading...</b>

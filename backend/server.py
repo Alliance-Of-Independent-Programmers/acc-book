@@ -70,8 +70,11 @@ async def enter(request: Request):
     data_forms_ent = await request.form()
     login = data_forms_ent.get("login")
     password = data_forms_ent.get("password")
-    user_db_resolver.get_user_from_db(login, )
-    return Response(status_code=200)
+    authentification_status = user_db_resolver.authentificate(login, password)
+    if authentification_status:
+        return Response(status_code=200)
+    else:
+        return Response(status_code=400)
 
 # TODO: needs to be tested
 routes = [
@@ -81,7 +84,6 @@ routes = [
     Route("/api/all_quotes", endpoint=get_all_quotes, methods=["GET"]),
     Route("/api/all_quotes", endpoint=add_quote, methods=["POST"])
 ]
-
 
 app = Starlette(
     routes=routes

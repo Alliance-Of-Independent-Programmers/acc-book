@@ -1,9 +1,22 @@
+
+from starlette.authentication import requires, AuthenticationBackend, AuthCredentials, SimpleUser
+from starlette.middleware import Middleware
+
 from dbresolvers.userdb import UserDataResolver
 from dbresolvers.quotesdb import QuoteDataResolver
+
+from backend.dbresolvers.userdb import UserDataResolver
+from backend.dbresolvers.quotesdb import QuoteDataResolver
+
+from dbresolvers.userdb import UserDataResolver
+from dbresolvers.quotesdb import QuoteDataResolver
+
 from starlette.applications import Starlette
 from starlette.responses import JSONResponse, Response
 from starlette.routing import Route
 from starlette.requests import Request
+
+from starlette.middleware.authentication import AuthenticationMiddleware
 
 # Objects do all database manipulations
 user_db_resolver = UserDataResolver()
@@ -63,18 +76,46 @@ async def registration(request: Request):
     if is_user_valid:
         user_db_resolver.add_user_to_db(login, email, password)
         user_db_resolver.commit_session()
-    return Response(status_code=200)
+        response = Response(status_code=200)
+        response.set_cookie("auth", email, 300)
+        return response
+    return JSONResponse({"error": "Логин или email уже заняты"}, status_code=404)
 
 
 async def enter(request: Request):
     data_forms_ent = await request.form()
-    login = data_forms_ent.get("login")
+    login = data_forms_ent.get("email")
     password = data_forms_ent.get("password")
     authentification_status = user_db_resolver.authentificate(login, password)
     if authentification_status:
-        return Response(status_code=200)
+        response = Response(status_code=200)
+        response.set_cookie("auth", login, 300)
+        return response
     else:
-        return Response(status_code=400)
+        return JSONResponse({"error": "Пользователь или пароль не найден"}, status_code=404)
+
+# Cookies
+
+class BasicAuthBackend(AuthenticationBackend):
+    async def authenticate(self, request):
+        if not request.cookies.get("auth"):
+            return
+        email = request.cookies.get("auth")
+        return AuthCredentials(["authenticated"]), SimpleUser(email)
+
+@requires('authenticated')
+async def check_user(request):
+    response = Response(status_code=200)
+    response.set_cookie("auth", request.user.display_name, 300)
+    return response
+
+@requires('authenticated')
+async def exit(request):
+    response = Response(status_code=200)
+    response.delete_cookie("auth")
+    return response
+
+
 
 # TODO: needs to be tested
 routes = [
@@ -82,9 +123,16 @@ routes = [
     Route("/api/registration", endpoint=registration, methods=["POST"]),
     Route("/api/all_users", endpoint=get_all_users, methods=["GET"]),
     Route("/api/all_quotes", endpoint=get_all_quotes, methods=["GET"]),
-    Route("/api/all_quotes", endpoint=add_quote, methods=["POST"])
+    Route("/api/all_quotes", endpoint=add_quote, methods=["POST"]),
+    Route("/api/check_user", endpoint=check_user, methods=["GET"]),
+    Route("/api/exit", endpoint=exit, methods=["GET"]),
+]
+
+middleware = [
+    Middleware(AuthenticationMiddleware, backend=BasicAuthBackend())
 ]
 
 app = Starlette(
-    routes=routes
+    routes=routes,
+    middleware=middleware
 )

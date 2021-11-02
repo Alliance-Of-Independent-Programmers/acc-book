@@ -15,6 +15,7 @@ import NavigationView from "./navbar/navigationview/NavigationView";
 import Registration from "./navbar/Registration";
 import Enter from "./navbar/Enter";
 import { UserContext, anonymous } from "./UserContext";
+import Exit from "./navbar/Exit";
 
 export default function App() {
   const [user, setUser] = React.useState(anonymous);
@@ -46,6 +47,9 @@ export default function App() {
             </Route>
             <Route path="/enter">
               <Enter />
+            </Route>
+            <Route path="/exit">
+              <Exit />
             </Route>
             <Route path="/" exact>
               <ContentView />

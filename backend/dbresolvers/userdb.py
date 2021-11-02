@@ -36,18 +36,15 @@ class UserDataResolver(object):
         self.session.delete(user_to_delete)
 
     # TODO: consider there is no double accounts and change .all() to .one()
-    def get_user_from_db(self, criteria, key):
-        return self.session.query(OneUser).filter(criteria == key).all()
+    def get_user_from_db(self, nick):
+        return self.session.query(OneUser).filter(OneUser.nickname == nick).all()
 
-    def check_user_validity(self, usr):
-        dnick_user_list = self.session.query(OneUser).filter(OneUser.nickname == usr.nickname).all()
-        demail_user_list = self.session.query(OneUser).filter(OneUser.email == usr.email).all()
-        if not dnick_user_list.empty():
+    def check_user_validity(self, nickname_srt, email_str):
+        dnick_user_list = self.session.query(OneUser).filter(OneUser.nickname == nickname_srt).all()
+        demail_user_list = self.session.query(OneUser).filter(OneUser.email == email_str).all()
+        if dnick_user_list or demail_user_list:
             return False
-        elif not demail_user_list.empty():
-            return False
-        else:
-            return True
+        return True
 
     def commit_session(self):
         self.session.commit()

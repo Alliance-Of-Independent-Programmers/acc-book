@@ -20,14 +20,17 @@ async def get_all_users(request):
     return JSONResponse(users_json)
 
 
-async def add_user(request):
-    data = await request.json()
-    user_db_resolver.add_user_to_db(data["nickname"], data["email"], data["password"])
-    user_db_resolver.commit_session()
-    return JSONResponse({
-        "text": data["nickname"],
-        "status": data["success"]
-    })
+# async def add_user(request):
+#     data = await request.json()
+#     is_user_valid = user_db_resolver.check_user_validity(data["nickname"], data["email"])
+#     print(is_user_valid)
+#     if is_user_valid:
+#         user_db_resolver.add_user_to_db(data["nickname"], data["email"], data["password"])
+#         user_db_resolver.commit_session()
+#     return JSONResponse({
+#         "text": data["nickname"],
+#         "status": data["success"]
+#     })
 
 
 async def get_all_quotes(request):
@@ -55,15 +58,26 @@ async def registration(request: Request):
     email = data_forms_reg.get("email")
     password = data_forms_reg.get("password")
     # TODO: get rid of possibility to add double note
-    user_db_resolver.add_user_to_db(login, email, password)
-    user_db_resolver.commit_session()
+    is_user_valid = user_db_resolver.check_user_validity(data_forms_reg["login"], data_forms_reg["email"])
+    print(is_user_valid)
+    if is_user_valid:
+        user_db_resolver.add_user_to_db(login, email, password)
+        user_db_resolver.commit_session()
+    return Response(status_code=200)
+
+
+async def enter(request: Request):
+    data_forms_ent = await request.form()
+    login = data_forms_ent.get("login")
+    password = data_forms_ent.get("password")
+    user_db_resolver.get_user_from_db(login, )
     return Response(status_code=200)
 
 # TODO: needs to be tested
 routes = [
+    Route("/api/enter", endpoint=enter, methods=["POST"]),
     Route("/api/registration", endpoint=registration, methods=["POST"]),
     Route("/api/all_users", endpoint=get_all_users, methods=["GET"]),
-    Route("/api/all_users", endpoint=add_user, methods=["POST"]),
     Route("/api/all_quotes", endpoint=get_all_quotes, methods=["GET"]),
     Route("/api/all_quotes", endpoint=add_quote, methods=["POST"])
 ]

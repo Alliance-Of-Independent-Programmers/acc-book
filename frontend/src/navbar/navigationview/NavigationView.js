@@ -17,6 +17,7 @@ import UserContext from "../../UserContext";
 
 export default function FormView(props) {
   const { userContext } = React.useContext(UserContext);
+
   return (
     <Router>
       <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
@@ -42,7 +43,9 @@ export default function FormView(props) {
               </NavDropdown>
             </Nav>
             {userContext.isAuthorized ? (
-              <h1>Auth</h1>
+              <Nav>
+                <Nav.Link href="/exit">Выход</Nav.Link>
+              </Nav>
             ) : (
               <Nav>
                 <Nav.Link href="/registration">Регистрация</Nav.Link>

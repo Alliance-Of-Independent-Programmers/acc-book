@@ -4,6 +4,7 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import React, { useState, useEffect } from "react";
 import UserContext from "../UserContext";
+import Cookies from "js-cookie";
 
 export default function ContentView(props) {
   const { userContext } = React.useContext(UserContext);
@@ -37,7 +38,9 @@ export default function ContentView(props) {
           <Col xs={9}>
             <CommentView comments={data1} />
           </Col>
-          {userContext.isAuthorized && <h1>Auth</h1>}
+          {userContext.isAuthorized && (
+            <div>Здравствуйте {Cookies.get("auth")}</div>
+          )}
         </>
       ) : (
         <b>Loading...</b>

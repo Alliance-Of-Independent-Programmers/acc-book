@@ -48,7 +48,10 @@ class UserDataResolver(object):
 
     def authentificate(self, nickname_str, password):
         dnick_user = self.session.query(OneUser).filter(OneUser.nickname == nickname_str)
-        return self.session.query(dnick_user.exists().scalar())
+        if self.session.query(dnick_user.exists().scalar()):
+            if dnick_user.one().password == password:
+                return True
+        return False
 
     def commit_session(self):
         self.session.commit()

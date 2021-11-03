@@ -1,5 +1,5 @@
-from backend.dbresolvers.userdb import UserDataResolver
-from backend.dbresolvers.quotesdb import QuoteDataResolver
+from dbresolvers.userdb import UserDataResolver
+from dbresolvers.quotesdb import QuoteDataResolver
 from starlette.applications import Starlette
 from starlette.responses import JSONResponse, Response
 from starlette.routing import Route

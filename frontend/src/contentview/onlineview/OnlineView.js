@@ -6,7 +6,7 @@ export default function OnlineView(props) {
   return (
     <>
       {props.onlarr.map((online, i) => {
-        return <Online author={online.author} key={i} />;
+        return <Online img={online.img} login={online.login} key={i} />;
       })}
     </>
   );

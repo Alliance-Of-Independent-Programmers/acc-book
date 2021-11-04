@@ -9,11 +9,8 @@ export default function Comment(props) {
   return (
     <div className="Comment">
       <div className="UserInfo">
-        <img
-          className="Avatar"
-          src={"data:image/jpeg;base64, " + props.author.img}
-        />
-        <div className="UserInfo-name">{props.author.login}</div>
+        <img className="Avatar" src={"data:image/jpeg;base64, " + props.img} />
+        <div className="UserInfo-name">{props.login}</div>
       </div>
       <div className="Comment-text">{props.text}</div>
       {/*<div className="Comment-date">{formatDate(props.date)}</div>*/}
@@ -22,7 +19,8 @@ export default function Comment(props) {
 }
 
 Comment.propTypes = {
-  author: PropTypes.object,
+  login: PropTypes.object,
+  img: PropTypes.object,
   text: PropTypes.object,
   date: PropTypes.object,
 };

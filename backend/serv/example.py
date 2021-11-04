@@ -29,6 +29,8 @@ users = [
 ]
 
 quotes = []
+
+online = []
 hasher = PBKDF2Hasher()
 
 
@@ -44,6 +46,7 @@ async def registration(request: Request):
         "password": password,
         # "img": misha,
     }
+    online.append({"login": login, "img": sanya})
     users.append(user)
     response = Response(status_code=200)
     response.set_cookie("auth", login, 300)
@@ -57,6 +60,7 @@ async def enter(request: Request):
     for user in users:
         if user["login"] == login and user["password"] == password:
             response = Response(status_code=200)
+            online.append({"login": login, "img": sanya})
             response.set_cookie("auth", login, 300)
             return response
     return JSONResponse({"error": "Пользователь или пароль не найден"}, status_code=404)
@@ -70,6 +74,7 @@ async def check_user(request):
 
 @requires('authenticated')
 async def exit(request):
+    online.remove({"login": request.user.display_name, "img": sanya})
     response = Response(status_code=200)
     response.delete_cookie("auth")
     return response
@@ -78,6 +83,7 @@ async def exit(request):
 class BasicAuthBackend(AuthenticationBackend):
     async def authenticate(self, request):
         print(request.cookies.get("auth"))
+        print(quotes)
         if not request.cookies.get("auth"):
             return
         login = request.cookies.get("auth")
@@ -88,13 +94,12 @@ async def quotef(request):
     data_forms_ent = await request.form()
     text = data_forms_ent.get("text")
     quote = {
-            "text": text,
-            "author": {
+        "text": text,
         "login": request.user.display_name,
         "img": sanya,
-  },
-}
+    }
     quotes.append(quote)
+
 
 
 async def comment_json_view(request):
@@ -102,7 +107,7 @@ async def comment_json_view(request):
 
 
 async def online_json_view(request):
-    return JSONResponse(all_online)
+    return JSONResponse(online)
 
 
 routes = [

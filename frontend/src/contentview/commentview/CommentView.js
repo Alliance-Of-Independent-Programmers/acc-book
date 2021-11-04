@@ -11,7 +11,8 @@ export default function CommentView(props) {
           <Comment
             date={comment.date}
             text={comment.text}
-            author={comment.author}
+            img={comment.img}
+            login={comment.login}
             key={i}
           />
         );

@@ -29,13 +29,14 @@ export default function ContentView(props) {
   }, []);
   return (
     <Row>
-      {data.length > 0 ? (
+      {data.length > 0 || data1.length > 0 ? (
         <>
           <Col>
             <h1>В онлайне</h1>
             <OnlineView onlarr={data} />
           </Col>
           <Col xs={9}>
+            <h1>Цитаты</h1>
             <CommentView comments={data1} />
           </Col>
           {userContext.isAuthorized && (

@@ -38,7 +38,7 @@ export default function Enter() {
     return (
       <Form onSubmit={formSend}>
         <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label>Email address</Form.Label>
+          <Form.Label>Login address</Form.Label>
           <Form.Control
             type="text"
             placeholder="Enter login"

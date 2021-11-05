@@ -3,17 +3,9 @@ import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import React from "react";
-import {
-  BrowserRouter as Router,
-  // Switch,
-  // Route,
-  // Link,
-  // useRouteMatch,
-  // useParams,
-} from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
 import UserContext from "../../UserContext";
-
-// import Registration from "../registration/registration";
+import Cookies from "js-cookie";
 
 export default function FormView(props) {
   const { userContext } = React.useContext(UserContext);
@@ -26,8 +18,11 @@ export default function FormView(props) {
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="me-auto">
-              <Nav.Link href="#features">1</Nav.Link>
-              <Nav.Link href="#pricing">2</Nav.Link>
+              {userContext.isAuthorized ? (
+                <Nav.Link href={"/" + Cookies.get("auth")}>Профиль</Nav.Link>
+              ) : (
+                <Nav.Link href="#pricing">1</Nav.Link>
+              )}
               <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
                 <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
                 <NavDropdown.Item href="#action/3.2">

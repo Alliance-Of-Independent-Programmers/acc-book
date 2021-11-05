@@ -15,5 +15,4 @@ export default function Online(props) {
 Online.propTypes = {
   img: PropTypes.object,
   login: PropTypes.object,
-  author: PropTypes.object,
 };

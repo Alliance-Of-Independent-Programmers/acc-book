@@ -14,8 +14,10 @@ import ContentView from "./contentview/ContentView";
 import NavigationView from "./navbar/navigationview/NavigationView";
 import Registration from "./navbar/Registration";
 import Enter from "./navbar/Enter";
+import Profile from "./profile/Profile";
 import { UserContext, anonymous } from "./UserContext";
 import Exit from "./navbar/Exit";
+import Cookies from "js-cookie";
 
 export default function App() {
   const [user, setUser] = React.useState(anonymous);
@@ -23,7 +25,6 @@ export default function App() {
     fetch("/api/check_user").then((resp) => {
       if (resp.status === 200) {
         setUser({ isAuthorized: true });
-        console.log("Ok");
       }
     });
   }, []);
@@ -34,7 +35,6 @@ export default function App() {
         value={{
           userContext: user,
           setUserContext: (newUser) => {
-            console.log("newUser", newUser);
             setUser(newUser);
           },
         }}
@@ -50,6 +50,9 @@ export default function App() {
             </Route>
             <Route path="/exit">
               <Exit />
+            </Route>
+            <Route path={"/" + Cookies.get("auth")}>
+              <Profile />
             </Route>
             <Route path="/" exact>
               <ContentView />

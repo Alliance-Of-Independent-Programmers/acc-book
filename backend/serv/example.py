@@ -15,9 +15,12 @@ from starlette.authentication import requires
 from starlette.middleware.authentication import AuthenticationMiddleware
 from starlette.responses import JSONResponse
 from starlette_auth_toolkit.cryptography import PBKDF2Hasher
+from datetime import datetime, timedelta
 
 path = os.path.dirname(__file__)
 sanya = base64.b64encode(open(os.path.join(path, "../Pics/Sanya.jpg"), "rb").read()).decode("UTF-8")
+
+online = dict()
 
 users = [
     {
@@ -29,8 +32,6 @@ users = [
 ]
 
 quotes = []
-
-online = []
 hasher = PBKDF2Hasher()
 
 
@@ -46,7 +47,7 @@ async def registration(request: Request):
         "password": password,
         # "img": misha,
     }
-    online.append({"login": login, "img": sanya})
+    online[login] = {"user_data": {"login": login, "img": sanya}, "expired": datetime.now()}
     users.append(user)
     response = Response(status_code=200)
     response.set_cookie("auth", login, 300)
@@ -60,7 +61,7 @@ async def enter(request: Request):
     for user in users:
         if user["login"] == login and user["password"] == password:
             response = Response(status_code=200)
-            online.append({"login": login, "img": sanya})
+            online[login] = {"user_data": {"login": login, "img": sanya}, "expired": datetime.now()}
             response.set_cookie("auth", login, 300)
             return response
     return JSONResponse({"error": "Пользователь или пароль не найден"}, status_code=404)
@@ -70,11 +71,12 @@ async def enter(request: Request):
 async def check_user(request):
     response = Response(status_code=200)
     response.set_cookie("auth", request.user.display_name, 300)
+    online[request.user.display_name]["expired"] = datetime.now()
     return response
 
 @requires('authenticated')
 async def exit(request):
-    online.remove({"login": request.user.display_name, "img": sanya})
+    del online[request.user.display_name]
     response = Response(status_code=200)
     response.delete_cookie("auth")
     return response
@@ -82,8 +84,6 @@ async def exit(request):
 
 class BasicAuthBackend(AuthenticationBackend):
     async def authenticate(self, request):
-        print(request.cookies.get("auth"))
-        print(quotes)
         if not request.cookies.get("auth"):
             return
         login = request.cookies.get("auth")
@@ -107,7 +107,12 @@ async def comment_json_view(request):
 
 
 async def online_json_view(request):
-    return JSONResponse(online)
+    online_send = []
+    if request.user:
+        for i in range(len(online)):
+            if datetime.now()-online[request.user.display_name]['expired'] < timedelta(seconds=300):
+                online_send.append(online[request.user.display_name]['user_data'])
+    return JSONResponse(online_send)
 
 
 routes = [

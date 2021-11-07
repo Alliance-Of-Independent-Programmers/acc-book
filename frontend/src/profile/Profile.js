@@ -1,28 +1,15 @@
 import React, { useEffect, useState } from "react";
-// import OnlineView from "../contentview/onlineview/OnlineView";
-// import FormView from "../formview/FormView";
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import Cookies from "js-cookie";
 import UserInfoView from "./UserInfoView";
+import UserQuotsView from "./UserQuotsView";
 
 export default function Profile(props) {
   const [data, setData] = useState([]);
-  const login = window.location["pathname"].slice(1);
-  const formSend = (event) => {
-    const data = new FormData();
-    data.append("login", login);
-    fetch("/api/user_info_construct", {
-      method: "POST",
-      body: data,
-    }).finally(() => document.location.reload());
-    event.preventDefault();
-  };
 
   const getData = async (url) => {
     const response = await fetch(url);
-
     return await response.json();
   };
   useEffect(() => {
@@ -31,15 +18,20 @@ export default function Profile(props) {
 
   return (
     <Row>
-      <Form onSubmit={formSend}>
-        <Button variant="primary" type="submit">
-          Закоментить
-        </Button>
-      </Form>
-      <Col>
-        <h1>В онлайне</h1>
-        <UserInfoView onlarr={data} />
-      </Col>
+      {data.length > 0 ? (
+        <>
+          <Col>
+            <h1>Информация о пользователе</h1>
+            <UserInfoView user={data[0]} />
+          </Col>
+          <Col xs={9}>
+            <h1>Цитаты {Cookies.get("auth")}</h1>
+            <UserQuotsView comments={data[1][Cookies.get("auth")]} />
+          </Col>
+        </>
+      ) : (
+        <b>Loading...</b>
+      )}
     </Row>
   );
 }

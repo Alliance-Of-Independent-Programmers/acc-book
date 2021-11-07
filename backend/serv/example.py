@@ -107,36 +107,24 @@ async def quotef(request):
     quotes.append(quote)
 
 
-user_data = []
-user_quotes = []
+user_data1 = dict()
+user_quotes = dict()
 
 
 async def user_info_construct(request):
-    user_data_get = user_data
-    if request.method == "POST":
-        data_forms_user_info = await request.form()
-        login = data_forms_user_info.get("login")
-        print(login)
-        user_data[login] = {
-            "login": login,
-            "img": users[login]["img"],
-            "email": users[login]["email"]
-        }
-        i = 0
-        for quote in quotes:
-            if quote["login"] == login:
-                user_quotes[login][i] = quote
-            i += 1
-        return Response(status_code=200)
-    else:
-        user_data_get = user_data
-        user_data = dict()
-        return JSONResponse(user_data_get)
-
-
-
-# async def user_data_json_view(request):
-#     return JSONResponse(request.body())
+    login = request.user.display_name
+    user_data1[login] = {
+        "login": login,
+        "img": users[login]["img"],
+        "email": users[login]["email"]
+    }
+    i = 0
+    user_quotes[login]=[]
+    for quote in quotes:
+        if quote["login"] == login:
+            user_quotes[login].append(quote)
+        i += 1
+    return JSONResponse([user_data1, user_quotes])
 
 
 async def comment_json_view(request):
@@ -156,7 +144,7 @@ routes = [
     Route("/api/enter", endpoint=enter, methods=["POST"]),
     Route("/api/registration", endpoint=registration, methods=["POST"]),
     Route("/api/quote", endpoint=quotef, methods=["POST"]),
-    Route("/api/user_info_construct", endpoint=user_info_construct, methods=["POST", "GET"]),
+    Route("/api/user_info_construct", endpoint=user_info_construct, methods=["GET"]),
     Route("/api/online_view", endpoint=online_json_view, methods=["GET"]),
     Route("/api/check_user", endpoint=check_user, methods=["GET"]),
     Route("/api/exit", endpoint=exit, methods=["GET"]),

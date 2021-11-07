@@ -22,7 +22,6 @@ export default function Enter() {
       .then((resp) => {
         if (resp.status === 200) {
           setUserContext({ isAuthorized: true });
-          console.log("Ok");
         } else {
           console.log("Логин или пароль не верны");
         }
@@ -48,9 +47,6 @@ export default function Enter() {
               setLogin(event.target.value);
             }}
           />
-          <Form.Text className="text-muted">
-            We will never share your email with anyone else.
-          </Form.Text>
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicPassword">
           <Form.Label>Password</Form.Label>

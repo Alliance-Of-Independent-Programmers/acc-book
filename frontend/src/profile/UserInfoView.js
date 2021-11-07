@@ -1,24 +1,20 @@
 import React from "react";
 import PropTypes from "prop-types";
 import UserInfo from "./UserInfo";
+import Cookies from "js-cookie";
 
 export default function UserInfoView(props) {
   return (
     <>
-      {props.onlarr.map((online, i) => {
-        return (
-          <UserInfo
-            img={online.img}
-            login={online.login}
-            email={online.email}
-            key={i}
-          />
-        );
-      })}
+      <UserInfo
+        img={props.user[Cookies.get("auth")].img}
+        login={props.user[Cookies.get("auth")].login}
+        email={props.user[Cookies.get("auth")].email}
+      />
     </>
   );
 }
 
 UserInfoView.propTypes = {
-  onlarr: PropTypes.array,
+  user: PropTypes.object,
 };

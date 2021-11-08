@@ -134,9 +134,11 @@ async def comment_json_view(request):
 async def online_json_view(request):
     online_send = []
     if request.user:
-        for i in range(len(online)):
-            if datetime.now() - online[request.user.display_name]['expired'] < timedelta(seconds=300):
-                online_send.append(online[request.user.display_name]['user_data'])
+        for i in online:
+            if datetime.now() - online[i]['expired'] < timedelta(seconds=300):
+                online_send.append(online[i]['user_data'])
+            else:
+                del online[i]
     return JSONResponse(online_send)
 
 

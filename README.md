@@ -24,7 +24,7 @@ yarn install
 ### *TODO:*
 #### Stage 1
 - [x] Backend main logic
-- [ ] Frontend main logic
+- [x] Frontend main logic
 #### Stage 2
 - [ ] Quote cards dashboard
 - [ ] Accounting people
